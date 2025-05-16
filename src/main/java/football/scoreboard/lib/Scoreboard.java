@@ -42,8 +42,8 @@ public class Scoreboard {
         return matches.stream()
                 .sorted(Comparator
                         .comparingInt((Match m) -> m.getHomeScore() + m.getAwayScore())
-                        .thenComparing(Match::getStartTime)
                         .reversed()
+                        .thenComparing(Match::getStartTime, Comparator.reverseOrder())
                 )
                 .collect(Collectors.toList());
     }
