@@ -6,6 +6,8 @@ import java.util.stream.Collectors;
 public class Scoreboard {
     private static final Scoreboard instance = new Scoreboard();
     private final List<Match> matches = new ArrayList<>();
+    private int orderCounter = 0;
+
 
     public Scoreboard() {
     }
@@ -18,8 +20,9 @@ public class Scoreboard {
         if (homeTeam == null || awayTeam == null || homeTeam.equals(awayTeam))
             throw new IllegalArgumentException("Invalid team names");
 
-        matches.add(new Match(homeTeam, awayTeam));
+        matches.add(new Match(homeTeam, awayTeam, orderCounter++));
     }
+
 
     public void finishGame(String homeTeam, String awayTeam) {
         matches.removeIf(m ->
@@ -40,13 +43,13 @@ public class Scoreboard {
 
     public List<Match> getSummary() {
         return matches.stream()
-                .sorted(Comparator
-                        .comparingInt((Match m) -> m.getHomeScore() + m.getAwayScore())
+                .sorted(Comparator.<Match>comparingInt(m -> m.getHomeScore() + m.getAwayScore())
                         .reversed()
-                        .thenComparing(Match::getStartTime, Comparator.reverseOrder())
-                )
+                        .thenComparing(Comparator.comparingInt(Match::getInsertionOrder).reversed()))
+
                 .collect(Collectors.toList());
     }
+
 
     public void reset() {
         matches.clear();

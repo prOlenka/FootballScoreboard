@@ -5,7 +5,8 @@ import java.util.List;
 public class LibApplication {
 
 	public static void main(String[] args) {
-		Scoreboard scoreboard = new Scoreboard();
+		Scoreboard scoreboard = Scoreboard.getInstance();
+		scoreboard.reset();
 
 		scoreboard.startGame("Mexico", "Canada");
 		scoreboard.updateScore("Mexico", "Canada", 0, 5);
@@ -22,9 +23,15 @@ public class LibApplication {
 		scoreboard.startGame("Argentina", "Australia");
 		scoreboard.updateScore("Argentina", "Australia", 3, 1);
 
-		System.out.println("Summary:");
-		for (Match match : scoreboard.getSummary()) {
-			System.out.println(match);
+		List<Match> summary = scoreboard.getSummary();
+		int i = 1;
+		for (Match m : summary) {
+			System.out.println(i++ + ". " + m);
 		}
+
+//		for (Match match : scoreboard.getSummary()) {
+//			System.out.println(match + " | InsertionOrder: " + match.getInsertionOrder());
+//		}
+
 	}
 }

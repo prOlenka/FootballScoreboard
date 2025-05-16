@@ -7,14 +7,17 @@ public class Match {
     private final String awayTeam;
     private int homeScore;
     private int awayScore;
-    private final LocalDateTime startTime;
+    private final int insertionOrder;
 
-    public Match(String homeTeam, String awayTeam) {
+    public Match(String homeTeam, String awayTeam, int insertionOrder) {
         this.homeTeam = homeTeam;
         this.awayTeam = awayTeam;
+        this.insertionOrder = insertionOrder;
         this.homeScore = 0;
         this.awayScore = 0;
-        this.startTime = LocalDateTime.now();
+    }
+    public int getInsertionOrder() {
+        return insertionOrder;
     }
 
     public String getHomeTeam() { return homeTeam; }
@@ -23,7 +26,6 @@ public class Match {
     public int getAwayScore() { return awayScore; }
     public void setHomeScore(int score) { this.homeScore = score; }
     public void setAwayScore(int score) { this.awayScore = score; }
-    public LocalDateTime getStartTime() { return startTime; }
 
     @Override
     public String toString() {
